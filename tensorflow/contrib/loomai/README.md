@@ -30,7 +30,7 @@ configure Bazel to use your Android SDK/NDK.
 
 Then from the root of the TensorFlow source tree, run:
 ```sh
-tensorflow/contrib/loomai/build_linux.sh my/favorite/directory
+tensorflow/contrib/loomai/build_android.sh my/favorite/directory
 ```
 
 The libraries can be found in
