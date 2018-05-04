@@ -1,0 +1,18 @@
+# C API and attention ops for loomai
+INFERENCE_SRCS := \
+tensorflow/c/tf_status_helper.cc \
+tensorflow/c/checkpoint_reader.cc \
+tensorflow/c/test_op.cc \
+tensorflow/c/c_api.cc \
+tensorflow/core/kernels/attention_ops.cc
+
+INFERENCE_OBJS := $(addprefix $(OBJDIR), $(INFERENCE_SRCS:.cc=.o))
+
+INFERENCE_LIB_NAME := libtensorflow_inference_native.a
+INFERENCE_LIB_PATH := $(LIBDIR)$(INFERENCE_LIB_NAME)
+
+$(INFERENCE_LIB_PATH): $(LIB_OBJS) $(INFERENCE_OBJS)
+	@mkdir -p $(dir $@)
+	$(AR) $(ARFLAGS) $(INFERENCE_LIB_PATH) $(LIB_OBJS) $(INFERENCE_OBJS)
+
+$(INFERENCE_LIB_NAME): $(INFERENCE_LIB_PATH)

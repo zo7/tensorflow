@@ -21,11 +21,15 @@ limitations under the License.
 #include <vector>
 
 #ifndef __ANDROID__
+// We are treating android and iOS the same way with respect to building
+// the C API. This means not including these headers.
+#ifndef __IOS__
 #include "tensorflow/cc/framework/gradients.h"
 #include "tensorflow/cc/framework/ops.h"
 #include "tensorflow/cc/framework/scope_internal.h"
 #include "tensorflow/cc/ops/while_loop.h"
 #include "tensorflow/cc/saved_model/loader.h"
+#endif
 #endif
 #include "tensorflow/c/c_api_internal.h"
 #include "tensorflow/core/common_runtime/device_mgr.h"
@@ -56,6 +60,12 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/public/session.h"
 #include "tensorflow/core/public/version.h"
+
+// For the rest of this file (and only this file), if we are
+// building iOS, pretend we are building for android
+#ifdef __IOS__
+#define __ANDROID__
+#endif
 
 // The implementation below is at the top level instead of the
 // brain namespace because we are defining 'extern "C"' functions.
